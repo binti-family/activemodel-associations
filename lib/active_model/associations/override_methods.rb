@@ -80,7 +80,10 @@ module ActiveModel::Associations
     def read_attribute(name)
       send(name)
     end
-    alias _read_attribute read_attribute
+
+    public def _read_attribute(*args)
+      read_attribute(*args)
+    end
 
     # dummy
     def new_record?
