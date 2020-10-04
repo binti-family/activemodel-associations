@@ -22,6 +22,10 @@ module ActiveModel
     module ClassMethods
       # define association like ActiveRecord
       def belongs_to(name, scope = nil, options = {})
+        if scope.is_a?(Hash)
+          options = scope
+          scope = nil
+        end
         reflection = ActiveRecord::Associations::Builder::BelongsTo.build(self, name, scope, options)
         ActiveRecord::Reflection.add_reflection self, name, reflection
       end
