@@ -80,14 +80,15 @@ module ActiveModel::Associations
     def read_attribute(name)
       send(name)
     end
-
-    public def _read_attribute(*args)
-      read_attribute(*args)
-    end
+    alias :_read_attribute :read_attribute
 
     # dummy
     def new_record?
       false
+    end
+
+    def primary_key
+      :id
     end
 
     private
