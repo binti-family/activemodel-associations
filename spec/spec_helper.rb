@@ -17,7 +17,9 @@ ActiveRecord::Base.establish_connection(
 class User < ActiveRecord::Base; end
 
 ActiveRecord::Migration.verbose = false
-ActiveRecord::Migrator.migrate File.expand_path("../db/migrate", __FILE__), nil
+ActiveRecord::MigrationContext.new(
+  File.expand_path("../db/migrate", __FILE__)
+).migrate
 
 require 'database_cleaner'
 
