@@ -18,14 +18,14 @@ class User < ActiveRecord::Base; end
 
 ActiveRecord::Migration.verbose = false
 
-if ActiveRecord.version <= Gem::Version.new("5.2.0")
-  ActiveRecord::MigrationContext.new(
-    File.expand_path("../db/migrate", __FILE__)
-  ).migrate
-elsif ActiveRecord.version >= Gem::Version.new("6.0.0")
+if ActiveRecord.version >= Gem::Version.new("6.0.0")
   ActiveRecord::MigrationContext.new(
     File.expand_path("../db/migrate", __FILE__),
     ActiveRecord::SchemaMigration
+  ).migrate
+elsif ActiveRecord.version >= Gem::Version.new("5.2.0")
+  ActiveRecord::MigrationContext.new(
+    File.expand_path("../db/migrate", __FILE__)
   ).migrate
 else
   raise "Unsupported Rails version"
