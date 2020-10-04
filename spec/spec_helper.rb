@@ -17,9 +17,19 @@ ActiveRecord::Base.establish_connection(
 class User < ActiveRecord::Base; end
 
 ActiveRecord::Migration.verbose = false
-ActiveRecord::MigrationContext.new(
-  File.expand_path("../db/migrate", __FILE__)
-).migrate
+
+if ActiveRecord.version <= Gem::Version.new("5.2.0")
+  ActiveRecord::MigrationContext.new(
+    File.expand_path("../db/migrate", __FILE__)
+  ).migrate
+elsif ActiveRecord.version >= Gem::Version.new("6.0.0")
+  ActiveRecord::MigrationContext.new(
+    File.expand_path("../db/migrate", __FILE__),
+    ActiveRecord::SchemaMigration
+  ).migrate
+else
+  raise "Unsupported Rails version"
+end
 
 require 'database_cleaner'
 
